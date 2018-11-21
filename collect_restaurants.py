@@ -18,4 +18,4 @@ if __name__ == '__main__':
     elif api_name == 'tb':
         TabelogCrawler().generate_restaurant_list(['https://tabelog.com/kyoto/C26100/rstLst/'])
     elif api_name == 'hp':
-        HotpepperCrawler().generate_restaurant_list(['https://www.hotpepper.jp/SA22/fwt%E4%BA%AC%E9%83%BD%E5%B8%82/bgn1/'])
+        HotpepperCrawler().generate_restaurant_list(['https://www.hotpepper.jp/yoyaku/SA91/'])

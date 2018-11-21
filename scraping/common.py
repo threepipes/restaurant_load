@@ -77,7 +77,7 @@ class Extracter:
         if not cands:
             logger.info('No basefile: You need to generate restaurants list.')
             return
-        filename = cands[-1]
+        filename = cands.sort()[-1]
         self.extract_restaurants(filename)
 
     def extract_restaurants(self, filename: str):
