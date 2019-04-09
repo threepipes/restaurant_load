@@ -1,8 +1,9 @@
 # 初回
 
 python, gitはインストール済みとする
-https://github.com/threepipes/scraping-open-close
-まだの場合は、こちらのpython3導入・ディレクトリ作成を行う
+
+まだの場合は、こちら(
+ https://github.com/threepipes/scraping-open-close )のpython3導入・ディレクトリ作成を行う
 
 ```commandline
 cd ~/python
