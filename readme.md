@@ -7,7 +7,7 @@ python, gitはインストール済みとする
 
 ```commandline
 cd ~/python
-git clone git@github.com:threepipes/restaurant_load.git
+git clone https://github.com/threepipes/restaurant_load.git
 
 cd restaurant_load
 
