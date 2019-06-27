@@ -15,11 +15,12 @@ logger.setLevel(DEBUG)
 base_dir = './output/'
 
 class Crawler:
-    def __init__(self, settings, basename='none'):
+    def __init__(self, settings, basename='none', encoding=None):
         self.restaurant_tag_name = settings['restaurant']
         self.nextpage_position = settings['nextpage']
         self.basename = basename
         self.session = Session()
+        self.encoding = encoding
 
     def generate_restaurant_list(self, list_page_urls: List[str]):
         timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M')
@@ -30,6 +31,8 @@ class Crawler:
             f.write('name,url\n')
             for list_page in list_page_urls:
                 res = self.session.get(list_page)
+                if self.encoding:
+                    res.encoding = self.encoding
                 dom = pq(res.text)
                 while True:
                     for restaurant in self.get_restaurant_list(dom, res):
@@ -40,6 +43,8 @@ class Crawler:
                         break
                     time.sleep(1)
                     res = self.session.get(next_url)
+                    if self.encoding:
+                        res.encoding = self.encoding
                     dom = pq(res.text)
 
     def get_restaurant_list(self, dom: pq, res: Response):
