@@ -70,9 +70,13 @@ class Crawler:
 
 
 class Extracter:
-    def __init__(self, settings, basename='none'):
+    def __init__(self, settings: dict, basename='none'):
         self.basename = basename
-        self.tel_location = settings['tel']
+        self.tel_location = settings.get('tel', '')
+        self.eval_score_location = settings.get('eval_score', '')
+        self.extract_elements = [
+            'name', 'url', 'tel', '050', 'eval_score'
+        ]
 
     def extract(self):
         cands = []
@@ -94,11 +98,13 @@ class Extracter:
         filename = f'{base_dir}{self.basename}_list_{timestamp}.csv'
 
         with open(filename, 'w') as f:
-            f.write('name,url,tel,050\n')
+            f.write(','.join(self.extract_elements) + '\n')
             for i, restaurant in enumerate(restaurant_list):
                 data = self.get_restaurant_data(restaurant['url'])
                 data['name'] = data.get('name', restaurant['name'])
-                f.write(f"{data['name']},{data['url']},{data['tel']},{data['050']}\n")
+
+                row = ','.join(map(lambda key: data[key], self.extract_elements))
+                f.write(row + '\n')
                 logger.debug(f'{i}/{len(restaurant_list)}: {data}')
                 f.flush()
                 time.sleep(1)
@@ -121,12 +127,23 @@ class Extracter:
     def get_restaurant_data(self, restaurant_url: str):
         dom = pq(restaurant_url)
         tel = self.get_phone_number(dom)
+        eval_score = self.get_eval_score(dom)
         is_050 = 'o' if re.match('050', tel) else ''
-        return {'tel': tel, 'url': restaurant_url, '050': is_050}
+        return {
+            'tel': tel,
+            'url': restaurant_url,
+            '050': is_050,
+            'eval_score': eval_score
+        }
 
     def get_phone_number(self, dom: pq):
         return dom(self.tel_location).text().strip()
 
+    def get_eval_score(self, dom: pq):
+        if self.eval_score_location:
+            return dom(self.eval_score_location).text().strip()
+        else:
+            return ''
 
 
 # if __name__ == '__main__':

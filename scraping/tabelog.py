@@ -20,7 +20,10 @@ class TabelogCrawler(Crawler):
 
 class TabelogExtracter(Extracter):
     def __init__(self):
-        super().__init__({'tel': 'p.rstdtl-side-yoyaku__tel-number'}, basename=basename)
+        super().__init__({
+            'tel': 'p.rstdtl-side-yoyaku__tel-number',
+            'eval_score': 'span.rdheader-rating__score-val-dtl',
+        }, basename=basename)
 
 
 if __name__ == '__main__':
