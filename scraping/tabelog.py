@@ -5,7 +5,7 @@ logger = getLogger(__file__)
 logger.addHandler(StreamHandler())
 logger.setLevel(DEBUG)
 
-restaurant_tag_name = 'div.list-rst__rst-name a'
+restaurant_tag_name = '.list-rst__rst-name a'
 nextpage_position = 'li.c-pagination__item a[rel="next"]'
 basename = 'tabelog'
 
